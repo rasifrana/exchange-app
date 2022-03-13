@@ -22,7 +22,7 @@ const Input = ({ placeholder, name, type, value, handleChange }) => (
 );
 
 const Welcome = () => {
-    const { connectWallet, shortAddress, currentAccount, formData, setformData, handleChange, sendTransaction } = useContext(TransactionContext);
+    const { connectWallet, shortAddress, currentAccount, formData, setformData, handleChange, sendTransaction, metamask } = useContext(TransactionContext);
 
     const handleSubmit = (e) => {
         const { addressTo, amount, keyword, message } = formData;
@@ -60,6 +60,7 @@ const Welcome = () => {
                             </p>
                         </button>
                     )}
+
 
                     <div className="grid sm:grid-cols-2  gap-2 grid-cols-2 w-full md:w-3/4 mt-10">
                         <div className={`rounded-tl-2xl ${companyCommonStyles}`}>

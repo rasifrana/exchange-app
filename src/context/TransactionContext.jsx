@@ -21,6 +21,7 @@ export const TransactionProvider = ({ children }) => {
     const [formData, setformData] = useState({ addressTo: "", amount: "", keyword: "", message: "" });
     const [isLoading, setIsLoading] = useState(false);
     const [transactionCount, setTransactionCount] = useState(localStorage.getItem("transactionCount"));
+    const [metamask, setMetamask] = useState('');
 
     const handleChange = (e, name) => {
         setformData((prevState) => ({ ...prevState, [name]: e.target.value }));
@@ -31,22 +32,18 @@ export const TransactionProvider = ({ children }) => {
 
     const checkIfWalletIsConnected = async () => {
         try {
-            if (!ethereum) return alert("Please Install Metamask Wallet");
+            if (!ethereum) return setMetamask('Please Install Metamask');
             const accounts = await ethereum.request({ method: 'eth_accounts' });
             console.log(accounts);
             if (accounts.length) {
                 setCurrentAccount(accounts[0]);
-
             }
-
-
         } catch (error) {
             throw new Error("No Eth Object");
         }
     }
 
     //Connect Ethereum wallet
-
     const connectWallet = async () => {
         try {
             if (!ethereum) return alert('Please Install Metamask Wallet');
@@ -108,7 +105,7 @@ export const TransactionProvider = ({ children }) => {
 
 
     return (
-        <TransactionContext.Provider value={{ connectWallet, shortAddress, currentAccount, formData, setformData, handleChange, sendTransaction }}>
+        <TransactionContext.Provider value={{ connectWallet, shortAddress, currentAccount, formData, setformData, handleChange, sendTransaction, metamask }}>
             {children}
         </TransactionContext.Provider>
     )
